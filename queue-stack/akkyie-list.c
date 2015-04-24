@@ -25,6 +25,13 @@ List * list_create() {
 }
 
 void list_delete(List * list) {
+	if (list->first) {
+		ListElement * element = list->first;
+		do {
+			ListElement * next = element->next;
+			free(element);
+		} while (next);
+	}
 	free(list);
 }
 
