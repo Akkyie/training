@@ -1,33 +1,33 @@
 #include <assert.h>
-#include "list.h"
+#include "akkyie-list.h"
 
 #define TEST_SIZE 1024
 
 int main(int argc, char const* argv[]) {
-    List *queue;
-    List *stack;
+    List *queue = list_create();
+    List *stack = list_create();
     int i, popped;
     bool result;
 
     for(i = 0; i < TEST_SIZE; ++i) {
-        push(&queue, i);
-        push(&stack, i);
+        list_push(queue, i);
+        list_push(stack, i);
     }
 
     for(i = 0; i < TEST_SIZE; ++i) {
-        result = shift(&queue, &popped);
+        result = list_shift(queue, &popped);
         assert(result);
         assert(popped == i);
-        result = pop(&stack, &popped);
+        result = list_pop(stack, &popped);
         assert(result);
         assert(popped == TEST_SIZE - 1 - i);
     }
 
-    assert(!shift(&queue, &popped));
-    assert(!pop(&stack, &popped));
+    assert(!list_shift(queue, &popped));
+    assert(!list_pop(stack, &popped));
 
-    delete(queue);
-    delete(stack);
+    list_delete(queue);
+    list_delete(stack);
 
     return EXIT_SUCCESS;
 }
